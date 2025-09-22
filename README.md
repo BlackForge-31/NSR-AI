@@ -7,17 +7,10 @@ This repository provides the API dependency layer for the NSR-AI Minecraft plugi
 To use this API in your project, add the following to your `pom.xml`:
 
 ```xml
-<repositories>
-    <repository>
-        <id>nsr-ai-api-repo</id>
-        <url>https://raw.github.com/BlackForge-31/NSR-AI/main/repo</url>
-    </repository>
-</repositories>
-
 <dependency>
     <groupId>com.nsr.ai</groupId>
-    <artifactId>nsr-ai-api</artifactId>
-    <version>1.2</version> <!-- Depend on the specific version tag you need -->
+    <artifactId>nsr-ai</artifactId>
+    <version>1.2.0</version> <!-- Depend on the specific version tag you need -->
     <scope>provided</scope>
 </dependency>
 ```
@@ -60,7 +53,7 @@ public class MyAddon extends JavaPlugin implements Listener {
         // Example: Modify the AI's response by adding a custom prefix and emoji
         event.setResponse("✨ [Addon] " + currentResponse + " 😊");
 
-        // You can also cancel the event if you want to prevent the AI's response from being sent to the player
+        // You can also cancel the event if you want to prevent the AI's response from being sent
         // event.setCancelled(true);
     }
 }
@@ -79,7 +72,7 @@ This API layer *does not* include any of the proprietary or closed-source featur
 
 These features remain part of the closed-source NSR-AI plugin.
 
-## License Restrictions
+## **License Restrictions**
 
 As per the included `LICENSE.txt` (MIT with Commons Clause), the following restrictions apply:
 

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nsr.ai</groupId>
-    <artifactId>nsr-ai-api</artifactId>
+    <artifactId>nsr-ai</artifactId>
     <version>1.2</version>
     <packaging>jar</packaging>
 
