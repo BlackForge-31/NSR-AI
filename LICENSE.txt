@@ -27,7 +27,9 @@ SOFTWARE.
 Without limiting other conditions in the License, the grant of rights under the
 License does not include the right to:
 
-- Re-implement or bypass the monetization features of the NSR-AI plugin.
-- Create API key expansions (e.g., for Gemini, OpenAI, Claude).
-- Create offline AI extensions (e.g., for Ollama, LLaMA, Claude).
-- Script canned responses.
+- Create or redistribute offline AI integrations (e.g., for Ollama, LLaMA, etc.).
+- Add API key expansions (e.g., for Gemini, OpenAI, Claude).
+- Create scripted response systems (e.g., pre-made answers).
+- Fork or re-implement the core functionality to bypass NSR-AI monetization.
+
+Only the official NSR-AI backend can be used for secure API key handling.

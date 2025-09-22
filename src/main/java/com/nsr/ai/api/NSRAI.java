@@ -10,21 +10,25 @@ import org.bukkit.entity.Player;
 public class NSRAI {
 
     /**
-     * Sends a message to the AI on behalf of a player.
+     * Sends a message to the AI on behalf of a player. This method is a stub and contains no logic.
+     * The actual implementation is handled by the core NSR-AI plugin.
      *
      * @param player  The player sending the message.
      * @param message The message to send.
      */
     public static void sendAIMessage(Player player, String message) {
-        // The actual implementation is in the closed-source NSR-AI plugin.
+        // This method is a stub. The actual implementation is in the closed-source NSR-AI plugin.
+        // Addons should call this method to allow the core plugin to process AI interactions.
     }
 
     /**
-     * Registers an addon with NSR-AI.
+     * Registers an addon with NSR-AI. This method is a stub and contains no logic.
+     * The actual implementation is handled by the core NSR-AI plugin.
      *
-     * @param addon The addon to register.
+     * @param addon The addon to register. It must implement the {@link AIAddon} interface.
      */
     public static void registerAddon(AIAddon addon) {
-        // The actual implementation is in the closed-source NSR-AI plugin.
+        // This method is a stub. The actual implementation is in the closed-source NSR-AI plugin.
+        // Addons should call this method during their onEnable to register themselves with NSR-AI.
     }
 }

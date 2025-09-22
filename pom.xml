@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nsr.ai</groupId>
-    <artifactId>nsr-ai</artifactId>
+    <artifactId>nsr-ai-api</artifactId>
     <version>1.2</version>
     <packaging>jar</packaging>
 
-    <name>NSR-AI</name>
-    <description>API for the NSR-AI Minecraft plugin.</description>
+    <name>NSR-AI API</name>
+    <description>API dependency layer for NSR-AI.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
