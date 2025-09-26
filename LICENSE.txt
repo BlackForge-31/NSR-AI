@@ -33,3 +33,5 @@ License does not include the right to:
 - Fork or re-implement the core functionality to bypass NSR-AI monetization.
 
 Only the official NSR-AI backend can be used for secure API key handling.
+
+We update the plugin to fix bugs or update in-build security. The security JAR will detach addons or plugins with dependencies on NSR-AI if they do not follow our guidelines. Failure to comply will result in a ban.

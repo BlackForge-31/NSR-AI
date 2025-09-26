@@ -85,3 +85,9 @@ As per the included `LICENSE.txt` (MIT with Commons Clause), the following restr
 ## Releases
 
 Developers should depend on specific version tags (e.g., `1.2.0`) for stability. The `main` branch may contain unreleased changes.
+
+---
+
+**Security Information:**
+
+For security reasons, we want to assure you that we do not control your server; your full power and control over the plugin remain unchanged. Security measures are implemented for addons or dependent plugins that might contain malware, suspicious code, or violate our terms. Such addons can be detached through the security system.
