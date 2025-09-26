@@ -90,4 +90,4 @@ Developers should depend on specific version tags (e.g., `1.2.0`) for stability.
 
 **Security Information:**
 
-For security reasons, we want to assure you that we do not control your server; your full power and control over the plugin remain unchanged. Security measures are implemented for addons or dependent plugins that might contain malware, suspicious code, or violate our terms. Such addons can be detached through the security system.
+For security reasons, we want to assure you that we do not control your server; your full power and control over the plugin remain unchanged. Security measures are implemented for addons or dependent plugins that might contain malware, suspicious code, or violate our terms. Such addons can be detached through the security system. Bug fixes require a server restart to take effect. However, security updates are applied dynamically without requiring a server restart, instantly reloading or patching dependent addons and plugins.
