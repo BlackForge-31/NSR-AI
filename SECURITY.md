@@ -1,7 +1,9 @@
 ```markdown
 # NSR-AI Security Policy
 
-This document outlines the security policies and guidelines for developing and using addons with the NSR-AI plugin. Our primary goal is to ensure the stability, integrity, and security of the server environment and the NSR-AI ecosystem.
+This document outlines the security policies and guidelines for developing and using addons
+with the NSR-AI plugin. Our primary goal is to ensure the stability, integrity, and security
+ of the server environment and the NSR-AI ecosystem.
 
 ## Core Principles
 
