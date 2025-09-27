@@ -11,7 +11,7 @@
 
     <name>NSR-AI Open-Source API</name>
     <description>Open-source API for the NSR-AI Minecraft Plugin</description>
-    <url>https://github.com/your-repo/nsr-ai-api</url> <!-- Replace with actual GitHub URL -->
+    <url>https://github.com/BlackForge-31/NSR-AI</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

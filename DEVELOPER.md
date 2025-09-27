@@ -23,7 +23,9 @@ public class MyAddon extends JavaPlugin {
     @Override
     public void onEnable() {
         if (NSRaiAPI.getApiVersion() < REQUIRED_API_VERSION) {
-            getLogger().severe("NSR-AI API version is too old! Required: " + REQUIRED_API_VERSION + ", Found: " + NSRaiAPI.getApiVersion());
+            getLogger().severe("NSR-AI API version is too old! " 
+                + "Required: " + REQUIRED_API_VERSION 
+                + ", Found: " + NSRaiAPI.getApiVersion());
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -129,10 +131,11 @@ public class MyAIInteraction {
                         player.sendMessage("AI says: " + aiResponse.getResponse());
                     } else {
                         player.sendMessage("AI failed to respond: " + aiResponse.getResponse());
-                    }m
+                    }
                 })
                 .exceptionally(ex -> {
-                    player.sendMessage("An error occurred while getting AI response: " + ex.getMessage());
+                    player.sendMessage("An error occurred while getting AI response: " 
+                        + ex.getMessage());
                     ex.printStackTrace();
                     return null;
                 });

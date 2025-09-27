@@ -10,7 +10,7 @@ Add the following to your `pom.xml`:
 <repositories>
     <repository>
         <id>nsr-ai-repo</id>
-        <url>https://repo.yourdomain.com/nsr-ai/</url> <!-- Replace with your actual repository URL -->
+        <url>https://maven.pkg.github.com/BlackForge-31/NSR-AI</url>
     </repository>
 </repositories>
 
@@ -29,10 +29,10 @@ Add the following to your `pom.xml`:
 *   **Chat System:** Send messages to AI, get AI responses (asynchronous).
 *   **Pet System:** Get pet data, register pet listeners.
 *   **NPC System:** Register NPC listeners, update NPC skins.
-*   **Memory System:** Access and update shared memory (placeholder, currently logs warnings).
+*   **Memory System:** Provides methods to access and update shared memory. (Note: This feature is currently a placeholder and will log warnings upon use).
 *   **Versioning:** Get plugin version and API version.
-*   **GUI System:** (Conditional) Open custom GUIs, register GUI listeners. Throws `IllegalStateException` if not supported by the core plugin.
-*   **Security System:** (Conditional) Get security status. Throws `IllegalStateException` if not supported by the core plugin.
+*   **GUI System:** (Conditional) Offers functionality to open custom GUIs and register GUI listeners. Calling these methods will throw an an `IllegalStateException` if the GUI system is not enabled in the core plugin.
+*   **Security System:** (Conditional) Provides methods to retrieve the current security status. Calling these methods will throw an `IllegalStateException` if the Security system is not enabled in the core plugin.
 
 ## Example: Safe Event Listener
 
@@ -58,7 +58,8 @@ public class MyAddonPlugin extends JavaPlugin implements Listener {
             NSRaiAPI.registerPetListener(new PetListener() {
                 @Override
                 public void onPetEvent(PetDataSnapshot petData) {
-                    getLogger().info("Pet event for owner " + petData.getOwner() + ": " + petData.getData());
+                    getLogger().info("Pet event for owner " 
+                        + petData.getOwner() + ": " + petData.getData());
                 }
             });
             getLogger().info("Pet listener registered successfully.");
@@ -71,9 +72,11 @@ public class MyAddonPlugin extends JavaPlugin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         // Example: Get pet data for a joining player
         try {
-            NSRaiAPI.getPetData(event.getPlayer().getUniqueId()).ifPresent(petData -> {
-                getLogger().info(event.getPlayer().getName() + "'s pet data: " + petData.getData());
-            });
+            NSRaiAPI.getPetData(event.getPlayer().getUniqueId())
+                    .ifPresent(petData -> {
+                        getLogger().info(event.getPlayer().getName() 
+                            + "'s pet data: " + petData.getData());
+                    });
         } catch (IllegalStateException e) {
             getLogger().warning("Could not get pet data: " + e.getMessage());
         }
