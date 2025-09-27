@@ -17,7 +17,7 @@ Addons or dependent plugins that contain malware, suspicious code, or violate ou
 
 As per the Commons Clause in our `LICENSE.txt`, and for security reasons, addons are strictly prohibited from:
 
-*   **Creating or redistributing offline AI integrations:** This includes systems for Ollama, LLaMA, local models, or any other method that bypasses our intended AI processing.
+*   **Creating or redistributing offline AI integrations:** This includes systems for Ollama, LLaMA, local models, or any other method that bypasses ourintended AI processing.
 *   **Adding API key expansions:** You may NOT implement direct API key expansions for external services (e.g., Gemini, OpenAI, Claude) through your addon. Only the official NSR-AI backend can be used for secure API key handling.
 *   **Creating scripted response systems:** Addons may NOT create pre-made or canned AI response systems that mimic or replace the dynamic AI behavior of NSR-AI.
 *   **Forking or re-implementing core functionality:** You may NOT fork or re-implement the core functionality of NSR-AI to bypass its monetization, security, or intended functionality.
