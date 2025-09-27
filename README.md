@@ -1,60 +1,82 @@
-# NSR-AI
+# NSR-AI Open-Source API
 
-This repository provides the API dependency layer for the NSR-AI Minecraft plugin. It allows developers to create addons that can interact with and extend the functionality of NSR-AI without including the proprietary core logic.
+This is the official open-source API for the NSR-AI Minecraft Plugin. It allows developers to interact with core NSR-AI functionalities in a safe and controlled manner.
 
-## Maven Dependency
+## Installation (Maven)
 
-To use this API in your project, add the following to your `pom.xml`:
+Add the following to your `pom.xml`:
 
 ```xml
-<dependency>
-    <groupId>com.nsr.ai</groupId>
-    <artifactId>nsr-ai</artifactId>
-    <version>1.2.0</version> <!-- Depend on the specific version tag you need -->
-    <scope>provided</scope>
-</dependency>
+<repositories>
+    <repository>
+        <id>nsr-ai-repo</id>
+        <url>https://repo.yourdomain.com/nsr-ai/</url> <!-- Replace with your actual repository URL -->
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.nsr.ai</groupId>
+        <artifactId>nsr-ai-api</artifactId>
+        <version>1.2</version> <!-- Use the current API version -->
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
 ```
 
-## Example: Listening to AIChatEvent
+## Features Available in API Version 2
 
-Developers can listen to custom events fired by NSR-AI to interact with its features. Here's an example of how to listen for the `AIChatEvent`:
+*   **Chat System:** Send messages to AI, get AI responses (asynchronous).
+*   **Pet System:** Get pet data, register pet listeners.
+*   **NPC System:** Register NPC listeners, update NPC skins.
+*   **Memory System:** Access and update shared memory (placeholder, currently logs warnings).
+*   **Versioning:** Get plugin version and API version.
+*   **GUI System:** (Conditional) Open custom GUIs, register GUI listeners. Throws `IllegalStateException` if not supported by the core plugin.
+*   **Security System:** (Conditional) Get security status. Throws `IllegalStateException` if not supported by the core plugin.
+
+## Example: Safe Event Listener
+
+This example demonstrates how to register a pet listener and handle pet events safely.
 
 ```java
-import com.nsr.ai.api.events.AIChatEvent;
+import com.nsr.ai.api.NSRaiAPI;
+import com.nsr.ai.api.PetDataSnapshot;
+import com.nsr.ai.api.PetListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MyAddon extends JavaPlugin implements Listener {
+public class MyAddonPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        // Register this class as an event listener
         getServer().getPluginManager().registerEvents(this, this);
-        getLogger().info("MyAddon has been enabled!");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("MyAddon has been disabled!");
+        
+        // Register a pet listener
+        try {
+            NSRaiAPI.registerPetListener(new PetListener() {
+                @Override
+                public void onPetEvent(PetDataSnapshot petData) {
+                    getLogger().info("Pet event for owner " + petData.getOwner() + ": " + petData.getData());
+                }
+            });
+            getLogger().info("Pet listener registered successfully.");
+        } catch (IllegalStateException e) {
+            getLogger().warning("Could not register pet listener: " + e.getMessage());
+        }
     }
 
     @EventHandler
-    public void onAIChat(AIChatEvent event) {
-        // Get the player who initiated the chat with the AI
-        // Player player = event.getPlayer();
-
-        // Get the original message sent by the player to the AI
-        // String message = event.getMessage();
-
-        // Get the AI's current response. This can be modified.
-        String currentResponse = event.getResponse();
-
-        // Example: Modify the AI's response by adding a custom prefix and emoji
-        event.setResponse("✨ [Addon] " + currentResponse + " 😊");
-
-        // You can also cancel the event if you want to prevent the AI's response from being sent
-        // event.setCancelled(true);
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        // Example: Get pet data for a joining player
+        try {
+            NSRaiAPI.getPetData(event.getPlayer().getUniqueId()).ifPresent(petData -> {
+                getLogger().info(event.getPlayer().getName() + "'s pet data: " + petData.getData());
+            });
+        } catch (IllegalStateException e) {
+            getLogger().warning("Could not get pet data: " + e.getMessage());
+        }
     }
 }
 ```
