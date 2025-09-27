@@ -7,9 +7,12 @@ with the NSR-AI plugin. Our primary goal is to ensure the stability, integrity, 
 
 ## Core Principles
 
-*   **Server Control:** We do not control your server. Your full power and control over the plugin remain unchanged.
-*   **Addon Integrity:** Security measures are implemented to protect against malicious, suspicious, or non-compliant addons.
-*   **API Key Protection:** The NSR-AI API is designed to prevent the exposure or misuse of API keys and sensitive information.
+*   **Server Control:** We do not control your server. Your full power and control over the plugin remain
+ unchanged.
+*   **Addon Integrity:** Security measures are implemented to protect against malicious, suspicious, or
+ non-compliant addons.
+*   **API Key Protection:** The NSR-AI API is designed to prevent the exposure or misuse of API keys and
+sensitive information.
 
 ## Addon Compliance and Bans
 
