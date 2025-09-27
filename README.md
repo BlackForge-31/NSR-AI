@@ -108,8 +108,7 @@ As per the included `LICENSE.txt` (MIT with Commons Clause), the following restr
 
 Developers should depend on specific version tags (e.g., `1.2.0`) for stability. The `main` branch may contain unreleased changes.
 
----
+## Documentation
 
-**Security Information:**
-
-For security reasons, we want to assure you that we do not control your server; your full power and control over the plugin remain unchanged. Security measures are implemented for addons or dependent plugins that might contain malware, suspicious code, or violate our terms. Such addons can be detached through the security system. Bug fixes require a server restart to take effect. However, security updates are applied dynamically without requiring a server restart, instantly reloading or patching dependent addons and plugins.
+*   **Developer Guide:** For detailed information on API usage, versioning, and feature detection, please refer to [DEVELOPER.md](DEVELOPER.md).
+*   **Security Policy:** For information on addon compliance, prohibited actions, and security updates, please refer to [SECURITY.md](SECURITY.md).
