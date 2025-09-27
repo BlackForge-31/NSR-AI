@@ -5,6 +5,15 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import com.nsr.ai.api.AIMessage;
+import com.nsr.ai.api.AIResponse;
+import com.nsr.ai.api.PetDataSnapshot;
+import com.nsr.ai.api.PetListener;
+import com.nsr.ai.api.NPCListener;
+import com.nsr.ai.api.GUIBuilder;
+import com.nsr.ai.api.GUIListener;
+import com.nsr.ai.api.SecurityStatus;
+
 /**
  * ⚠️ This API is read-only, cannot bypass NSR-AI security, cannot store or reveal API keys,
  * and cannot be used to create scripted/canned AI responses.
@@ -142,72 +151,5 @@ public final class NSRaiAPI {
         // The internal API would likely have a method like 'addonManager.registerAddon(addonPluginInstance)'
         System.out.println("NSR-AI API: Addon " + addonPluginInstance.getClass().getName() + " registered.");
     }
-
-    // --- Placeholder Classes/Interfaces for Public API ---
-
-    // Chat
-    public static class AIMessage {
-        private final String content;
-        private final UUID senderId;
-
-        public AIMessage(String content, UUID senderId) {
-            this.content = content;
-            this.senderId = senderId;
-        }
-
-        public String getContent() { return content; }
-        public UUID getSenderId() { return senderId; }
-    }
-
-    public static class AIResponse {
-        private final String response;
-        private final boolean success;
-
-        public AIResponse(String response, boolean success) {
-            this.response = response;
-            this.success = success;
-        }
-
-        public String getResponse() { return response; }
-        public boolean isSuccess() { return success; }
-    }
-
-    // Pets
-    public static class PetDataSnapshot {
-        private final UUID owner;
-        private final String data; // Placeholder for actual pet data
-
-        public PetDataSnapshot(UUID owner, String data) {
-            this.owner = owner;
-            this.data = data;
-        }
-
-        public UUID getOwner() { return owner; }
-        public String getData() { return data; }
-    }
-
-    public interface PetListener {
-        void onPetEvent(PetDataSnapshot petData);
-    }
-
-    // NPC
-    public interface NPCListener {
-        void onNPCInteract(Player player, String npcName);
-    }
-
-    // GUI
-    public interface GUIBuilder {
-        // Placeholder for GUI building methods
-    }
-
-    public interface GUIListener {
-        void onGUIEvent(Player player, String eventType);
-    }
-
-    // Security
-    public enum SecurityStatus {
-        ACTIVE,
-        WARNING,
-        CRITICAL
-    }
 }
+
