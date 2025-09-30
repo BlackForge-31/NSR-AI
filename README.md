@@ -9,13 +9,6 @@ This is the official open-source API for the NSR-AI Minecraft Plugin. It allows 
 Add the following to your `pom.xml`:
 
 ```xml
-<repositories>
-    <repository>
-        <id>nsr-ai-repo</id>
-        <url>https://maven.pkg.github.com/BlackForge-31/NSR-AI</url>
-    </repository>
-</repositories>
-
 <dependencies>
     <dependency>
         <groupId>com.nsr.ai</groupId>
