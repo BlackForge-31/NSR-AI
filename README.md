@@ -18,7 +18,7 @@ Add the following to your `pom.xml`:
 
 <dependencies>
     <dependency>
-        <groupId>com.nsr.ai</groupId>
+        <groupId>com.nsr-ai</groupId>
         <artifactId>nsr-ai-api</artifactId>
         <version>1.2</version> <!-- Use the current API version -->
         <scope>provided</scope>
