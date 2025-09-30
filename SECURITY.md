@@ -46,7 +46,7 @@ security vulnerability or non-compliant behavior is detected.
 ## Reporting Security Issues
 
 If you discover a security vulnerability or suspect a non-compliant addon, please report it
- immediately to [Your Security Contact/Email/Discord] to help us maintain a secure environment for all users.
+ immediately to blackforge31@gmail.com to help us maintain a secure environment for all users.
 
 ---
 *This policy is subject to change. Please refer to the latest version for up-to-date information.*
