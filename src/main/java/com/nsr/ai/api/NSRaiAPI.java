@@ -18,12 +18,25 @@ import com.nsr.ai.api.SecurityStatus;
  * ⚠️ This API is read-only, cannot bypass NSR-AI security, cannot store or reveal API keys,
  * and cannot be used to create scripted/canned AI responses.
  */
+/**
+ * The main entry point for the NSR-AI Open-Source API.
+ * This final class provides static methods for addons to interact with the NSR-AI core plugin.
+ * It acts as a facade, forwarding calls to the internal plugin implementation via reflection.
+ *
+ * ⚠️ This API is read-only, cannot bypass NSR-AI security, cannot store or reveal API keys,
+ * and cannot be used to create scripted/canned AI responses.
+ */
 public final class NSRaiAPI {
 
+    /**
+     * The current major version of the NSR-AI Open-Source API.
+     * Addons should check this value for compatibility.
+     */
     public static final int API_VERSION = 2;
 
     // Internal core plugin reference (set via reflection by the core plugin)
     private static Object internalApiInstance; // Represents the internal com.nsr.ai.plugin.api.NSRaiAPI
+    private static NSRaiAPI instance;
 
     private NSRaiAPI() {
         // Private constructor to prevent instantiation
@@ -32,12 +45,26 @@ public final class NSRaiAPI {
     /**
      * Internal method used by the NSR-AI core plugin to set the internal API instance.
      * Addon developers should NOT call this method.
-     * @param instance The internal API instance.
+     * @param internalApiInstance The internal API instance.
      */
-    public static void setInternalApiInstance(Object instance) {
-        NSRaiAPI.internalApiInstance = instance;
+    public static void setInternalApiInstance(Object internalApiInstance) {
+        if (NSRaiAPI.instance == null) {
+            NSRaiAPI.instance = new NSRaiAPI();
+        }
+        NSRaiAPI.instance.internalApiInstance = internalApiInstance;
     }
 
+    /**
+     * Calls an internal method of the NSR-AI core plugin via reflection.
+     * This method handles the forwarding of public API calls to the actual internal implementation.
+     * @param methodName The name of the internal method to call.
+     * @param paramTypes An array of Class objects representing the parameter types of the method.
+     * @param args The arguments to pass to the method.
+     * @param <T> The return type of the method.
+     * @return The result of the internal method call.
+     * @throws IllegalStateException if the internal API is not initialized, the method is not found,
+     *                                an access error occurs, or the internal method throws an exception.
+     */
     private static <T> T callInternalMethod(String methodName, Class<?>[] paramTypes, Object... args) {
         if (internalApiInstance == null) {
             throw new IllegalStateException("NSR-AI core plugin not initialized or API not ready.");
@@ -62,15 +89,35 @@ public final class NSRaiAPI {
     }
 
     // --- Chat API ---
+    /**
+     * Sends a message from a player to the AI. This operation is asynchronous.
+     * @param player The player sending the message.
+     * @param message The AI message to send.
+     * @return A CompletableFuture that completes when the message has been processed by the AI.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the chat service is not available.
+     */
     public static CompletableFuture<Void> sendMessageToAI(Player player, AIMessage message) {
         return callInternalMethod("sendMessageToAI", new Class<?>[]{Player.class, AIMessage.class}, player, message);
     }
 
+    /**
+     * Gets an asynchronous AI response to a given message.
+     * @param message The AI message to get a response for.
+     * @return A CompletableFuture that will contain the AI's response.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the chat service is not available.
+     */
     public static CompletableFuture<AIResponse> getAIResponse(AIMessage message) {
         return callInternalMethod("getAIResponse", new Class<?>[]{AIMessage.class}, message);
     }
 
     // --- Pets API ---
+    /**
+     * Retrieves a snapshot of pet data for a given owner UUID.
+     * Returns an empty Optional if the pet service is not available or no data is found.
+     * @param owner The UUID of the pet owner.
+     * @return An Optional containing PetDataSnapshot if available, otherwise empty.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized.
+     */
     public static Optional<PetDataSnapshot> getPetData(UUID owner) {
         try {
             return Optional.ofNullable(callInternalMethod("getPetData", new Class<?>[]{UUID.class}, owner));
@@ -81,20 +128,43 @@ public final class NSRaiAPI {
         }
     }
 
+    /**
+     * Registers a listener to receive pet-related events.
+     * @param listener The PetListener instance to register.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the pet service is not available.
+     */
     public static void registerPetListener(PetListener listener) {
         callInternalMethod("registerPetListener", new Class<?>[]{PetListener.class}, listener);
     }
 
     // --- NPC API ---
+    /**
+     * Registers a listener to receive NPC-related events.
+     * @param listener The NPCListener instance to register.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the NPC service is not available.
+     */
     public static void registerNPCListener(NPCListener listener) {
         callInternalMethod("registerNPCListener", new Class<?>[]{NPCListener.class}, listener);
     }
 
+    /**
+     * Updates the skin of a specified NPC.
+     * @param npcName The name of the NPC to update.
+     * @param texture The base64 encoded texture string.
+     * @param signature The base64 encoded signature string for the texture.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the NPC service is not available.
+     */
     public static void updateNPCSkin(String npcName, String texture, String signature) {
         callInternalMethod("updateNPCSkin", new Class<?>[]{String.class, String.class, String.class}, npcName, texture, signature);
     }
 
     // --- GUI API (Conditional) ---
+    /**
+     * Opens a custom GUI for a player.
+     * @param player The player for whom to open the GUI.
+     * @param guiBuilder The GUIBuilder instance defining the GUI layout and behavior.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the GUI system is not supported by this version.
+     */
     public static void openCustomGUI(Player player, GUIBuilder guiBuilder) {
         // Internal API throws UnsupportedOperationException if GUI service is null.
         // We re-throw it as IllegalStateException as per public API requirement.
@@ -105,6 +175,11 @@ public final class NSRaiAPI {
         }
     }
 
+    /**
+     * Registers a listener to receive GUI-related events.
+     * @param listener The GUIListener instance to register.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the GUI system is not supported by this version.
+     */
     public static void registerGUIListener(GUIListener listener) {
         try {
             callInternalMethod("registerGUIListener", new Class<?>[]{GUIListener.class}, listener);
@@ -114,17 +189,34 @@ public final class NSRaiAPI {
     }
 
     // --- Memory API ---
+    /**
+     * Retrieves a value from the shared memory.
+     * @param key The key of the memory entry to retrieve.
+     * @return An Optional containing the value if found, otherwise empty.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the memory service is not available.
+     */
     public static Optional<String> getSharedMemory(String key) {
         // Internal API logs warning and returns Optional.empty() for now.
         return callInternalMethod("getSharedMemory", new Class<?>[]{String.class}, key);
     }
 
+    /**
+     * Updates a value in the shared memory.
+     * @param key The key of the memory entry to update.
+     * @param value The new value to set.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the memory service is not available.
+     */
     public static void updateSharedMemory(String key, String value) {
         // Internal API logs warning for now.
         callInternalMethod("updateSharedMemory", new Class<?>[]{String.class, String.class}, key, value);
     }
 
     // --- Security API (Conditional) ---
+    /**
+     * Retrieves the current security status of the NSR-AI plugin.
+     * @return The current SecurityStatus.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the Security system is not supported by this version.
+     */
     public static SecurityStatus getSecurityStatus() {
         // Internal API throws UnsupportedOperationException if Security service is null.
         // We re-throw it as IllegalStateException as per public API requirement.
@@ -136,20 +228,62 @@ public final class NSRaiAPI {
     }
 
     // --- Versioning API ---
+    /**
+     * Retrieves the version string of the NSR-AI core plugin.
+     * @return The version string of the core plugin.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized.
+     */
     public static String getVersion() {
         return callInternalMethod("getVersion", new Class<?>[]{});
     }
 
+    /**
+     * Retrieves the current API version of the NSR-AI Open-Source API.
+     * @return The API version.
+     */
     public static int getApiVersion() {
         return API_VERSION;
     }
 
     // --- Addon Management ---
+    /**
+     * Registers an addon with the NSR-AI core plugin.
+     * This allows the core plugin to manage the addon, especially for security purposes.
+     * @param addonPluginInstance The instance of the addon's main plugin class.
+     * @throws IllegalStateException if the NSR-AI core plugin is not initialized.
+     */
     public static void registerAddon(Object addonPluginInstance) {
         // TODO: Implement addon registration logic in the internal API if needed.
         // For now, this is a placeholder to satisfy the public API requirement.
         // The internal API would likely have a method like 'addonManager.registerAddon(addonPluginInstance)'
         System.out.println("NSR-AI API: Addon " + addonPluginInstance.getClass().getName() + " registered.");
+    }
+
+    /**
+     * Gets the logger instance for the NSR-AI plugin.
+     * @return The logger instance.
+     */
+    public static java.util.logging.Logger getLogger() {
+        return callInternalMethod("getLogger", new Class<?>[]{});
+    }
+
+    /**
+     * Gets the NSR-AI plugin instance.
+     * @return The plugin instance.
+     */
+    public static org.bukkit.plugin.Plugin getPlugin() {
+        return callInternalMethod("getPlugin", new Class<?>[]{});
+    }
+
+    /**
+     * Gets the NSR-AI API instance.
+     * @return The API instance.
+     */
+    public static NSRaiAPI getApi() {
+        if (instance == null) {
+            throw new IllegalStateException("NSR-AI API has not been initialized by the core plugin.");
+        }
+        return instance;
     }
 }
 
