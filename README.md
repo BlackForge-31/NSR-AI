@@ -20,7 +20,8 @@ Add the following to your `pom.xml`:
     <dependency>
         <groupId>com.nsr.ai</groupId>
         <artifactId>nsr-ai-api</artifactId>
-        <version>1.2</version> <!-- Use the current API version -->
+        <version>1.2</version> <!-- Use the current API version --> <!--Don't use the api version 2.0 it is worng and not compatible with the nsr as
+         it was published by mistake make sure you use the api version 1.2 not 2.0 -->
         <scope>provided</scope>
     </dependency>
 </dependencies>
