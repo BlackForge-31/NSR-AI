@@ -18,9 +18,9 @@ Add the following to your `pom.xml`:
 
 <dependencies>
     <dependency>
-        <groupId>com.nsr-ai</groupId>
+        <groupId>com.nsr.ai</groupId>
         <artifactId>nsr-ai-api</artifactId>
-        <version>2.0</version> 
+        <version>1.2</version> <!-- Use the current API version -->
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -117,3 +117,12 @@ Developers should depend on specific version tags (e.g., `1.2.0`) for stability.
 
 *   **Developer Guide:** For detailed information on API usage, versioning, and feature detection, please refer to [DEVELOPER.md](DEVELOPER.md).
 *   **Security Policy:** For information on addon compliance, prohibited actions, and security updates, please refer to [SECURITY.md](SECURITY.md).
+
+## For Addon Developers
+
+If you are developing an addon for NSR-AI, please adhere to the following critical guidelines:
+
+*   **Installation Path:** Addon JAR files must be placed in `/plugins/NSR-AI/addons/` to be loaded correctly. You must instruct your users to do this.
+*   **Command Prefixes:** All addon commands must start with `/aiaddon` or `/aia`. Advanced, non-conflicting commands may use `/ai` with specific keywords (e.g., `/ai stats`).
+
+For detailed rules on command structure, advanced command usage, and the addon lifecycle, please refer to the **[Developer Guide](DEVELOPER.md)**.

@@ -161,6 +161,41 @@ public class MyAddon extends JavaPlugin {
 }
 ```
 
-## 5. Further Assistance
+## 5. Addon Installation
+
+For an addon to be recognized and loaded by NSR-AI, its JAR file **must** be placed in the following directory:
+
+```
+/plugins/NSR-AI/addons/
+```
+
+Addons placed in the main `/plugins/` directory or any other location will not be loaded by the addon manager. This ensures a clean separation between standard plugins and NSR-AI addons.
+
+Standard Bukkit/Spigot plugins that do not interact with the NSR-AI API can be placed in the main `/plugins/` folder as usual.
+
+As a developer, you **must** instruct your users to place your addon's JAR file in this specific directory. For an example of how to communicate this, see the installation instructions for plugins like [Advance-Player-Stats](https://modrinth.com/plugin/advance-player-stats).
+
+## 6. Addon Command Guidelines
+
+To prevent conflicts with the core plugin's commands and to ensure a consistent user experience, all addons must follow these command registration rules:
+
+### Standard Addon Commands
+
+All general addon commands must be prefixed with either `/aiaddon` or its shorter alias, `/aia`.
+
+-   **Correct:** `/aiaddon myfeature`
+-   **Correct:** `/aia stats`
+-   **Incorrect:** `/myfeature`
+
+### Advanced Commands (Conditional)
+
+In specific cases, you may register a sub-command under the main `/ai` command (e.g., `/ai playerstats`). This is permitted **only if** your command logic meets the following criteria:
+
+1.  **No Conflict:** It must not override or interfere with any existing or future core `/ai` sub-commands.
+2.  **No Conversation Interference:** It must not disrupt a player's ongoing conversation with the AI. Your command must be distinct and not something a player would say in a normal chat. For example, an addon like `Advance-Player-Stats` could use `/ai stats` because it's a specific, non-conversational keyword.
+
+Failure to follow these guidelines may result in your addon being blocked by the core plugin's security manager.
+
+## 7. Further Assistance
 
 For any further questions or issues, please refer to the main `README.md` or contact the NSR-AI development team.
