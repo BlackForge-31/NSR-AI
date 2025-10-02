@@ -20,7 +20,7 @@ Add the following to your `pom.xml`:
 </dependencies>
 ```
 
-## Features Available in API Version 2
+## Features Available in API Version 2-Alpha
 
 *   **Chat System:** Send messages to AI, get AI responses (asynchronous).
 *   **Pet System:** Get pet data, register pet listeners.
