@@ -116,6 +116,7 @@ Developers should depend on specific version tags (e.g., `1.2.0`) for stability.
 
 ##full repo tree of BlackForge-31/NSR-AI:
 
+```directory tree
 NSR-AI/
 ├── .gitignore
 ├── DEVELOPER.md
@@ -144,6 +145,7 @@ NSR-AI/
                             ├── PetDataSnapshot.java
                             ├── PetListener.java
                             └── SecurityStatus.java
+```
 
 ## For Addon Developers
 
