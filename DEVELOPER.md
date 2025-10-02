@@ -244,4 +244,40 @@ Failure to follow these guidelines may result in your addon being blocked by the
 
 ## 7. Further Assistance
 
-For any further questions or issues, please refer to the main `README.md` or contact the NSR-AI development team (blackforge31@gmail.com).
+For any further questions orissues, please refer to the main `README.md` or contact the NSR-AI development team (blackforge31@gmail.com).
+
+  ## 8. Addon Submission and Review Process
+
+  To ensure the security, stability, and compliance of the NSR-AI ecosystem, especially for addons that interact with core functionalities or introduce
+  new commands, we have established a submission and review process. This process is designed to prevent your addon from being blocked or banned by the
+  core plugin's security manager.
+
+  ### 8.1 Requesting Permission to Build
+
+  Before embarking on the development of a potentially high-risk or deeply integrated addon, we encourage developers to reach out to the NSR-AI
+  development team. This allows us to provide guidance, clarify API usage, and confirm the feasibility of your addon idea in advance.
+
+     Contact:* Please email the NSR-AI development team at blackforge31@gmail.com with a brief description of your addon's intended functionality and how
+   it plans to interact with the NSR-AI API.
+
+  ### 8.2 Post-Development Validation
+
+  Once your addon is developed, it must undergo a validation process to ensure it adheres to all guidelines, including the "Commons Clause" of the
+  license, and does not pose any security risks.
+
+     Inform the Team:* After completing your addon, please inform the NSR-AI development team at blackforge31@gmail.com. We will then initiate the
+  validation process.
+     Validation Outcome:* We will review your addon's functionality and inform you whether it is validated for use within the NSR-AI ecosystem.
+
+  ### 8.3 Source Code Review for High-Risk Addons
+
+  For addons deemed "high-risk" (e.g., those interacting with security features, modifying core AI behavior, or handling sensitive player data), a source
+   code review will be required as part of the validation process.
+
+     Confidentiality:* We assure you that any source code provided for review will be stored privately and confidentially. It will not be shared with any
+   third parties.
+     Developer Rights:* Your intellectual property rights to your addon's source code remain entirely yours. The review is solely for security and
+  compliance verification.
+
+  Failure to comply with this submission and review process, especially for high-risk addons, may result in your addon being blocked by the core plugin's
+   security manager.
