@@ -1,6 +1,6 @@
 # NSR-AI Open-Source API
 
-![Version](https://img.shields.io/badge/Version-1.2-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.2--Beta2-blue.svg)
 
 This is the official open-source API for the NSR-AI Minecraft Plugin. It allows developers to interact with core NSR-AI functionalities in a safe and controlled manner.
 
@@ -9,12 +9,6 @@ This is the official open-source API for the NSR-AI Minecraft Plugin. It allows 
 Add the following to your `pom.xml`:
 
 ```xml
-<repositories>
-    <repository>
-        <id>nsr-ai-repo</id>
-        <url>https://maven.pkg.github.com/BlackForge-31/NSR-AI</url>
-    </repository>
-</repositories>
 
 <dependencies>
     <dependency>
