@@ -12,7 +12,7 @@ import com.nsr.ai.api.PetListener;
 import com.nsr.ai.api.NPCListener;
 import com.nsr.ai.api.GUIBuilder;
 import com.nsr.ai.api.GUIListener;
-import com.nsr.ai.api.SecurityStatus;
+
 
 /**
  * ⚠️ This API is read-only, cannot bypass NSR-AI security, cannot store or reveal API keys,
@@ -207,21 +207,7 @@ public final class NSRaiAPI {
         callInternalMethod("updateSharedMemory", new Class<?>[]{String.class, String.class}, key, value);
     }
 
-    // --- Security API (Conditional) ---
-    /**
-     * Retrieves the current security status of the NSR-AI plugin.
-     * @return The current SecurityStatus.
-     * @throws IllegalStateException if the NSR-AI core plugin is not initialized or the Security system is not supported by this version.
-     */
-    public static SecurityStatus getSecurityStatus() {
-        // Internal API throws UnsupportedOperationException if Security service is null.
-        // We re-throw it as IllegalStateException as per public API requirement.
-        try {
-            return callInternalMethod("getSecurityStatus", new Class<?>[]{});
-        } catch (UnsupportedOperationException e) {
-            throw new IllegalStateException("Security system not supported by this NSR-AI version.", e);
-        }
-    }
+
 
     // --- Versioning API ---
     /**
