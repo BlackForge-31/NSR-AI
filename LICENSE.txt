@@ -29,10 +29,10 @@ Without limiting other conditions in the License, the grant of rights under the
 License does not include the right to:
 
 - Create or redistribute offline AI integrations (e.g., for Ollama, LLaMA, etc.).
-- Add API key expansions (e.g., for Gemini, OpenAI, Claude).(you can build the addon like command triger,player stats and all but dont adds other api provider and offline mode you can use it but not for the expansions and all and make sure your addon dont steal the info you can improve the player conaversations and all,etc)
+- Add API key expansions (e.g., for Gemini, OpenAI, Claude).
 - Create scripted response systems (e.g., pre-made answers).
 - Fork or re-implement the core functionality to bypass NSR-AI monetization.
-
+- For details information about this see the [Readme.md](Readme.md).
 Only the official NSR-AI backend can be used for secure API key handling.
 
 We update the plugin to fix bugs or update in-build security. The security JAR 
