@@ -84,9 +84,9 @@ public class MyAddonPlugin extends JavaPlugin implements Listener {
 
 This API layer *does not* include any of the proprietary or closed-source features of the main NSR-AI plugin, such as:
 
-*   NPC AI system (spawning, pathfinding, interactions)
-*   Pet AI system (taming, behaviors, communication)
-*   Advanced memory system for AI entities
+*   NPC AI System (Spawning, Pathfinding, Interactions) – Upcoming Feature (Coming Soon)
+*   Pet AI System (Taming, Behaviors, Communication) – Implemented, under testing for API compatibility
+*   Advanced Memory System for AI Entities – Implemented, currently in testing phase
 *   Offline AI integrations (e.g., Ollama, LLaMA, local models)
 *   Direct API key expansions for external services (e.g., Gemini, OpenAI, Claude)
 *   Scripted or canned response systems
