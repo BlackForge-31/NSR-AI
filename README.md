@@ -98,7 +98,7 @@ These features remain part of the closed-source NSR-AI plugin.
 As per the included `LICENSE.txt` (MIT with Commons Clause), the following restrictions apply:
 
 *   You may NOT create or redistribute offline AI integrations.
-*   You may NOT add API key expansions.
+*   You may NOT add API key expansions.(you can build the addon like command triger,player stats and all but dont adds other api provider and offline mode you can use it but not for the expansions and all and make sure your addon dont steal the info you can improve the player conaversations and all,etc)
 *   You may NOT create scripted response systems.
 *   You may NOT fork or re-implement the core functionality to bypass NSR-AI monetization.
 *   Only the official NSR-AI backend can be used for secure API key handling.
