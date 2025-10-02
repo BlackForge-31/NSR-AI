@@ -248,9 +248,9 @@ For any further questions orissues, please refer to the main `README.md` or cont
 
   ## 8. Addon Submission and Review Process
 
-  To ensure the security, stability, and compliance of the NSR-AI ecosystem, especially for addons that interact with core functionalities or introduce
+  To ensure the security, stability, and compliance of the NSR-AI ecosystem, especially for addons that interact with core functionalities, violets our rules or introduce
   new commands, we have established a submission and review process. This process is designed to prevent your addon from being blocked or banned by the
-  core plugin's security manager.
+  core plugin's security manager. (Especially api,offline mode etc. Genral addons you can build without the permission)
 
   ### 8.1 Requesting Permission to Build
 
