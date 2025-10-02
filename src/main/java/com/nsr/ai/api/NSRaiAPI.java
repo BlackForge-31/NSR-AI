@@ -36,7 +36,6 @@ public final class NSRaiAPI {
 
     // Internal core plugin reference (set via reflection by the core plugin)
     private static Object internalApiInstance; // Represents the internal com.nsr.ai.plugin.api.NSRaiAPI
-    private static NSRaiAPI instance;
 
     private NSRaiAPI() {
         // Private constructor to prevent instantiation
@@ -45,13 +44,10 @@ public final class NSRaiAPI {
     /**
      * Internal method used by the NSR-AI core plugin to set the internal API instance.
      * Addon developers should NOT call this method.
-     * @param internalApiInstance The internal API instance.
+     * @param instance The internal API instance.
      */
-    public static void setInternalApiInstance(Object internalApiInstance) {
-        if (NSRaiAPI.instance == null) {
-            NSRaiAPI.instance = new NSRaiAPI();
-        }
-        NSRaiAPI.instance.internalApiInstance = internalApiInstance;
+    public static void setInternalApiInstance(Object instance) {
+        NSRaiAPI.internalApiInstance = instance;
     }
 
     /**
@@ -280,10 +276,7 @@ public final class NSRaiAPI {
      * @return The API instance.
      */
     public static NSRaiAPI getApi() {
-        if (instance == null) {
-            throw new IllegalStateException("NSR-AI API has not been initialized by the core plugin.");
-        }
-        return instance;
+        return new NSRaiAPI(); // This is a static utility class, so we can just return a new instance
     }
 }
 
