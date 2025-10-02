@@ -198,4 +198,4 @@ Failure to follow these guidelines may result in your addon being blocked by the
 
 ## 7. Further Assistance
 
-For any further questions or issues, please refer to the main `README.md` or contact the NSR-AI development team.
+For any further questions or issues, please refer to the main `README.md` or contact the NSR-AI development team (blackforge31@gmail.com).
