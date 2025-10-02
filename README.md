@@ -95,7 +95,7 @@ These features remain part of the closed-source NSR-AI plugin.
 
 License Restrictions
 
-*   As per the included LICENSE.txt(LICENSE.txt) (MIT with Commons Clause), the following restrictions apply:
+*   As per the included LICENSE.txt (MIT with Commons Clause), the following restrictions apply:
 *   You may NOT create or redistribute offline AI integrations (e.g., Ollama, LLaMA, local models).
 *   You may NOT add or expand API key providers (e.g., Gemini, OpenAI, Claude).
 *   Addons may use the API for general purposes only (e.g., custom commands, player stats, conversation improvements).
