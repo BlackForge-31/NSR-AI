@@ -93,15 +93,17 @@ This API layer *does not* include any of the proprietary or closed-source featur
 
 These features remain part of the closed-source NSR-AI plugin.
 
-## **License Restrictions**
+License Restrictions
 
-As per the included `LICENSE.txt` (MIT with Commons Clause), the following restrictions apply:
-
-*   You may NOT create or redistribute offline AI integrations.
-*   You may NOT add API key expansions.(you can build the addon like command triger,player stats and all but dont adds other api provider and offline mode you can use it but not for the expansions and all and make sure your addon dont steal the info you can improve the player conaversations and all,etc)
-*   You may NOT create scripted response systems.
-*   You may NOT fork or re-implement the core functionality to bypass NSR-AI monetization.
-*   Only the official NSR-AI backend can be used for secure API key handling.
+*   As per the included LICENSE.txt(LICENSE.txt) (MIT with Commons Clause), the following restrictions apply:
+*   You may NOT create or redistribute offline AI integrations (e.g., Ollama, LLaMA, local models).
+*   You may NOT add or expand API key providers (e.g., Gemini, OpenAI, Claude).
+*   Addons may use the API for general purposes only (e.g., custom commands, player stats, conversation improvements).
+*   However, you must not attempt to expand its scope with additional API providers, offline modes, or external services.
+*   You may NOT create scripted or canned-response systems.
+*   You may NOT fork, re-implement, or otherwise bypass NSR-AI’s core monetization model.
+*   Only the official NSR-AI backend may be used for secure API key handling.
+*   Addons must respect user privacy — they must not steal or transmit sensitive data.
 
 ## Releases
 
