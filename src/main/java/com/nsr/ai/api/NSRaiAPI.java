@@ -231,14 +231,11 @@ public final class NSRaiAPI {
     /**
      * Registers an addon with the NSR-AI core plugin.
      * This allows the core plugin to manage the addon, especially for security purposes.
-     * @param addonPluginInstance The instance of the addon's main plugin class.
+     * @param addon The addon instance to register.
      * @throws IllegalStateException if the NSR-AI core plugin is not initialized.
      */
-    public static void registerAddon(Object addonPluginInstance) {
-        // TODO: Implement addon registration logic in the internal API if needed.
-        // For now, this is a placeholder to satisfy the public API requirement.
-        // The internal API would likely have a method like 'addonManager.registerAddon(addonPluginInstance)'
-        System.out.println("NSR-AI API: Addon " + addonPluginInstance.getClass().getName() + " registered.");
+    public static void registerAddon(AIAddon addon) {
+        callInternalMethod("registerAddon", new Class<?>[]{AIAddon.class}, addon);
     }
 
     /**

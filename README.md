@@ -1,6 +1,6 @@
 # NSR-AI Open-Source API
 
-![Version](https://img.shields.io/badge/Version-1.2--Alpha-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.2.1--Beta-blue.svg)
 
 This is the official open-source API for the NSR-AI Minecraft Plugin. It allows developers to interact with core NSR-AI functionalities in a safe and controlled manner.
 
@@ -14,13 +14,13 @@ Add the following to your `pom.xml`:
     <dependency>
         <groupId>com.nsr-ai</groupId>
         <artifactId>nsr-ai-api</artifactId>
-        <version>1.2-Alpha</version> <!-- Use the current API version -->
+        <version>1.2.1-Beta</version> <!-- Use the current API version -->
         <scope>provided</scope>
     </dependency>
 </dependencies>
 ```
 
-## Features Available in API Version 2-Alpha
+## Features Available in API Version 2
 
 *   **Chat System:** Send messages to AI, get AI responses (asynchronous).
 *   **Pet System:** Get pet data, register pet listeners.
@@ -117,6 +117,6 @@ Developers should depend on specific version tags (e.g., `1.2.0`) for stability.
 If you are developing an addon for NSR-AI, please adhere to the following critical guidelines:
 
 *   **Installation Path:** Addon JAR files must be placed in `/plugins/NSR-AI/addons/` to be loaded correctly. You must instruct your users to do this.
-*   **Command Prefixes:** All addon commands must start with `/aiaddon` or `/aia`. Advanced, non-conflicting commands may use `/ai` with specific keywords (e.g., `/ai stats`).
+*   **Command Prefixes:** All addon commands must start with `/ai` followed by the addon's specific subcommand (e.g., `/ai joke`).
 
 For detailed rules on command structure, advanced command usage, and the addon lifecycle, please refer to the **[Developer Guide](DEVELOPER.md)**.

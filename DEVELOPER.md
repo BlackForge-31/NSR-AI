@@ -149,14 +149,60 @@ Register your addon with the NSR-AI core using `NSRaiAPI.registerAddon()`. This 
 
 ```java
 import com.nsr.ai.api.NSRaiAPI;
+import com.nsr.ai.api.AIAddon; 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MyAddon extends JavaPlugin {
+import java.util.Map; // Required for getCommands and getFeatures
+import java.util.HashMap; // Required for getCommands and getFeatures
+import org.bukkit.entity.Player; // Required for onCommand
+
+public class MyAddon extends JavaPlugin implements AIAddon { // Implement AIAddon
+
+    private static final int REQUIRED_API_VERSION = 2; // The API version your addon is built against
 
     @Override
     public void onEnable() {
-        NSRaiAPI.registerAddon(this); // Pass your plugin instance
+        if (NSRaiAPI.getApiVersion() < REQUIRED_API_VERSION) {
+            getLogger().severe("NSR-AI API version is too old! " 
+                + "Required: " + REQUIRED_API_VERSION 
+                + ", Found: " + NSRaiAPI.getApiVersion());
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        NSRaiAPI.registerAddon(this); // Pass your AIAddon instance
         getLogger().info("MyAddon registered with NSR-AI core.");
+        // ... other onEnable logic
+    }
+
+    @Override
+    public void onDisable() {
+        // ... onDisable logic
+    }
+
+    @Override
+    public String getName() {
+        return "MyAddon";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0.0";
+    }
+
+    @Override
+    public String onCommand(Player player, String[] args) {
+        // ... command handling logic
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getCommands() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> getFeatures() {
+        return new HashMap<>();
     }
 }
 ```
