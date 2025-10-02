@@ -114,6 +114,37 @@ Developers should depend on specific version tags (e.g., `1.2.0`) for stability.
 *   **Developer Guide:** For detailed information on API usage, versioning, and feature detection, please refer to [DEVELOPER.md](DEVELOPER.md).
 *   **Security Policy:** For information on addon compliance, prohibited actions, and security updates, please refer to [SECURITY.md](SECURITY.md).
 
+##full repo tree of BlackForge-31/NSR-AI:
+
+NSR-AI/
+├── .gitignore
+├── DEVELOPER.md
+├── LICENSE.txt
+├── README.md
+├── SECURITY.md
+├── _config.yml
+├── pom.xml
+└── src/
+    └── main/
+        └── java/
+            └── com/
+                └── nsr/
+                    └── ai/
+                        └── api/
+                            ├── events/
+                            │   └── (event classes here)
+                            ├── AIAddon.java
+                            ├── AIMessage.java
+                            ├── AIResponse.java
+                            ├── GUIBuilder.java
+                            ├── GUIListener.java
+                            ├── NPCListener.java
+                            ├── NSRAI.java
+                            ├── NSRaiAPI.java
+                            ├── PetDataSnapshot.java
+                            ├── PetListener.java
+                            └── SecurityStatus.java
+
 ## For Addon Developers
 
 If you are developing an addon for NSR-AI, please adhere to the following critical guidelines:
