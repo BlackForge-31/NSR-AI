@@ -130,7 +130,8 @@ public class MyAIInteraction {
                     if (aiResponse.isSuccess()) {
                         player.sendMessage("AI says: " + aiResponse.getResponse());
                     } else {
-                        player.sendMessage("AI failed to respond: " + aiResponse.getResponse());
+                        player.sendMessage("AI failed to respond: " 
+                        + aiResponse.getResponse());
                     }
                 })
                 .exceptionally(ex -> {
@@ -145,67 +146,110 @@ public class MyAIInteraction {
 
 ## 4. Addon Registration
 
-Register your addon with the NSR-AI core using `NSRaiAPI.registerAddon()`. This allows the core plugin to manage your addon, especially for security purposes.
+To properly register your addon with the NSR-AI core, you should implement the `AIAddon` interface in a separate class, distinct from your main `JavaPlugin` class. This approach avoids conflicts with `JavaPlugin`'s lifecycle methods and ensures compatibility.
+
+Your main `JavaPlugin` class will be responsible for instantiating and registering your `AIAddon` implementation.
+
+### Example: Main Plugin Class (`MyAddonPlugin.java`)
 
 ```java
 import com.nsr.ai.api.NSRaiAPI;
-import com.nsr.ai.api.AIAddon; 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Map; // Required for getCommands and getFeatures
-import java.util.HashMap; // Required for getCommands and getFeatures
-import org.bukkit.entity.Player; // Required for onCommand
-
-public class MyAddon extends JavaPlugin implements AIAddon { // Implement AIAddon
+public class MyAddonPlugin extends JavaPlugin {
 
     private static final int REQUIRED_API_VERSION = 2; // The API version your addon is built against
 
     @Override
     public void onEnable() {
         if (NSRaiAPI.getApiVersion() < REQUIRED_API_VERSION) {
-            getLogger().severe("NSR-AI API version is too old! " 
-                + "Required: " + REQUIRED_API_VERSION 
+            getLogger().severe("NSR-AI API version is too old! "
+                + "Required: " + REQUIRED_API_VERSION
                 + ", Found: " + NSRaiAPI.getApiVersion());
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        NSRaiAPI.registerAddon(this); // Pass your AIAddon instance
+
+        // Instantiate your AIAddon implementation and pass this plugin instance
+        AIAddon myAIAddon = new MyAIAddonImpl(this);
+        NSRaiAPI.registerAddon(myAIAddon); // Register the addon implementation
         getLogger().info("MyAddon registered with NSR-AI core.");
-        // ... other onEnable logic
+
+        // ... other onEnable logic for your main plugin
     }
 
     @Override
     public void onDisable() {
-        // ... onDisable logic
+        // ... onDisable logic for your main plugin
+    }
+}
+```
+
+### Example: AIAddon Implementation Class (`MyAIAddonImpl.java`)
+
+This class implements the `AIAddon` interface.
+
+```java
+import com.nsr.ai.api.AIAddon;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin; // Required for onEnable(JavaPlugin plugin)
+import java.util.Map;
+import java.util.HashMap;
+
+public class MyAIAddonImpl implements AIAddon {
+
+    private JavaPlugin plugin; // Reference to the main plugin instance
+
+    public MyAIAddonImpl(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public void onEnable(JavaPlugin plugin) {
+        // This onEnable is called by the NSR-AI core, not by Bukkit.
+        // Use it for any AIAddon-specific initialization if needed.
+        plugin.getLogger().info("MyAIAddonImpl enabled by NSR-AI core.");
+    }
+
+    @Override
+    public void onDisable() {
+        // This onDisable is called by the NSR-AI core.
+        plugin.getLogger().info("MyAIAddonImpl disabled by NSR-AI core.");
     }
 
     @Override
     public String getName() {
-        return "MyAddon";
+        // Get the name from the main plugin's description
+        return plugin.getDescription().getName();
     }
 
     @Override
     public String getVersion() {
-        return "1.0.0";
+        // Get the version from the main plugin's description
+        return plugin.getDescription().getVersion();
     }
 
     @Override
     public String onCommand(Player player, String[] args) {
-        // ... command handling logic
+        // ... command handling logic for this AIAddon
         return null;
     }
 
     @Override
     public Map<String, String> getCommands() {
-        return new HashMap<>();
+        Map<String, String> commands = new HashMap<>();
+        commands.put("mycommand", "Description of my command.");
+        return commands;
     }
 
     @Override
     public Map<String, String> getFeatures() {
-        return new HashMap<>();
+        Map<String, String> features = new HashMap<>();
+        features.put("My Feature", "Description of my feature.");
+        return features;
     }
 }
-```
+``````
 
 ## 5. Addon Installation
 
@@ -244,40 +288,40 @@ Failure to follow these guidelines may result in your addon being blocked by the
 
 ## 7. Further Assistance
 
-For any further questions orissues, please refer to the main `README.md` or contact the NSR-AI development team (blackforge31@gmail.com).
+For any further questions or issues, please refer to the main `README.md` or contact the NSR-AI development team (blackforge31@gmail.com).
 
-  ## 8. Addon Submission and Review Process
+## 8. Addon Submission and Review Process
 
-  To ensure the security, stability, and compliance of the NSR-AI ecosystem, especially for addons that interact with core functionalities, violets our rules or introduce
-  new commands, we have established a submission and review process. This process is designed to prevent your addon from being blocked or banned by the
-  core plugin's security manager. (Especially api,offline mode etc. Genral addons you can build without the permission)
+To ensure the security, stability, and compliance of the NSR-AI ecosystem, especially for addons that interact with core functionalities, violets our rules or introduce
+new commands, we have established a submission and review process. This process is designed to prevent your addon from being blocked or banned by the
+core plugin's security manager. (Especially api,offline mode etc. Genral addons you can build without the permission)
 
-  ### 8.1 Requesting Permission to Build
+### 8.1 Requesting Permission to Build
 
-  Before embarking on the development of a potentially high-risk or deeply integrated addon, we encourage developers to reach out to the NSR-AI
-  development team. This allows us to provide guidance, clarify API usage, and confirm the feasibility of your addon idea in advance.
+Before embarking on the development of a potentially high-risk or deeply integrated addon, we encourage developers to reach out to the NSR-AI
+development team. This allows us to provide guidance, clarify API usage, and confirm the feasibility of your addon idea in advance.
 
-     Contact:* Please email the NSR-AI development team at blackforge31@gmail.com with a brief description of your addon's intended functionality and how
-   it plans to interact with the NSR-AI API.
+   Contact:* Please email the NSR-AI development team at blackforge31@gmail.com with a brief description of your addon's intended functionality and how
+it plans to interact with the NSR-AI API.
 
-  ### 8.2 Post-Development Validation
+### 8.2 Post-Development Validation
 
-  Once your addon is developed, it must undergo a validation process to ensure it adheres to all guidelines, including the "Commons Clause" of the
-  license, and does not pose any security risks.
+Once your addon is developed, it must undergo a validation process to ensure it adheres to all guidelines, including the "Commons Clause" of the
+license, and does not pose any security risks.
 
-     Inform the Team:* After completing your addon, please inform the NSR-AI development team at blackforge31@gmail.com. We will then initiate the
-  validation process.
-     Validation Outcome:* We will review your addon's functionality and inform you whether it is validated for use within the NSR-AI ecosystem.
+   Inform the Team:* After completing your addon, please inform the NSR-AI development team at blackforge31@gmail.com. We will then initiate the
+validation process.
+   Validation Outcome:* We will review your addon's functionality and inform you whether it is validated for use within the NSR-AI ecosystem.
 
-  ### 8.3 Source Code Review for High-Risk Addons
+### 8.3 Source Code Review for High-Risk Addons
 
-  For addons deemed "high-risk" (e.g., those interacting with security features, modifying core AI behavior, or handling sensitive player data), a source
-   code review will be required as part of the validation process.
+For addons deemed "high-risk" (e.g., those interacting with security features, modifying core AI behavior, or handling sensitive player data), a source
+ code review will be required as part of the validation process.
 
-     Confidentiality:* We assure you that any source code provided for review will be stored privately and confidentially. It will not be shared with any
-   third parties.
-     Developer Rights:* Your intellectual property rights to your addon's source code remain entirely yours. The review is solely for security and
-  compliance verification.
+   Confidentiality:* We assure you that any source code provided for review will be stored privately and confidentially. It will not be shared with any
+ third parties.
+   Developer Rights:* Your intellectual property rights to your addon's source code remain entirely yours. The review is solely for security and
+compliance verification.
 
-  Failure to comply with this submission and review process, especially for high-risk addons, may result in your addon being blocked by the core plugin's
-   security manager.
+Failure to comply with this submission and review process, especially for high-risk addons, may result in your addon being blocked by the core plugin's
+ security manager.
