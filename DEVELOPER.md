@@ -146,7 +146,37 @@ public class MyAIInteraction {
 
 ## 4. Addon Registration
 
-Register your addon with the NSR-AI core using `NSRaiAPI.registerAddon()`. Your main plugin class must implement the `AIAddon` interface.
+To ensure your addon is properly loaded and recognized by the NSR-AI core plugin, you **must** include an `addon.yml` file in the root of your addon's JAR archive. This file provides essential metadata for your addon.
+
+### 4.1 The `addon.yml` File (Mandatory)
+
+Every NSR-AI addon **must** include an `addon.yml` file in the root of its JAR archive. This file provides critical metadata that the NSR-AI plugin uses to load and manage your addon.
+
+#### Required Fields:
+
+*   **`main`**: This field specifies the fully qualified class name of your addon's main class. This class must implement the `com.nsr.ai.plugin.addons.Addon` interface.
+    *   **Example:** `main: com.yourcompany.yourapi.YourAddonMainClass`
+
+*   **`name`**: This field defines the unique name of your addon. This name is used for logging, commands, and security validation. Choose a descriptive and unique name.
+    *   **Example:** `name: MyAwesomeAddon`
+
+*   **`version`**: This field indicates the version of your addon. It's good practice to follow semantic versioning (e.g., `1.0.0`, `1.2.3-BETA`).
+    *   **Example:** `version: 1.0.0`
+
+#### Example `addon.yml`:
+
+```yaml
+main: com.yourcompany.yourapi.YourAddonMainClass
+name: MyAwesomeAddon
+version: 1.0.0
+description: A brief description of what your addon does.
+author: YourName
+website: https://yourwebsite.com
+```
+
+### 4.2 Registering Your Addon Programmatically
+
+After ensuring your `addon.yml` is correctly configured, register your addon with the NSR-AI core using `NSRaiAPI.registerAddon()`. Your main plugin class must implement the `AIAddon` interface.
 
 ```java
 import com.nsr.ai.api.NSRaiAPI;
