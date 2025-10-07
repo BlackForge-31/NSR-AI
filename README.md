@@ -1,6 +1,6 @@
 # NSR-AI Open-Source API
 
-![Version](https://img.shields.io/badge/Version-1.2.1--Beta-blue.svg)
+![Version](https://img.shields.io/badge/Version-1.2.2--Beta-blue.svg)
 
 This is the official open-source API for the NSR-AI Minecraft Plugin. It allows developers to interact with core NSR-AI functionalities in a safe and controlled manner.
 
@@ -14,11 +14,20 @@ Add the following to your `pom.xml`:
     <dependency>
         <groupId>com.nsr-ai</groupId>
         <artifactId>nsr-ai-api</artifactId>
-        <version>1.2.1-Beta2</version> <!-- Use the current API version -->
+        <version>1.2.2-Beta</version> <!-- Use the current API version -->
         <scope>provided</scope>
     </dependency>
 </dependencies>
 ```
+
+## Creating an Addon
+
+To create an addon for NSR-AI, you need to:
+
+1.  **Implement the `AIAddon` interface:** Your main addon class must implement the `com.nsr.ai.api.AIAddon` interface.
+2.  **Create an `addon.yml` file:** In your project's resources folder, create a file named `addon.yml`.
+
+For a detailed guide on creating addons, please refer to the [DEVELOPER.md](DEVELOPER.md) file.
 
 ## Features Available in API Version 2
 
@@ -29,56 +38,6 @@ Add the following to your `pom.xml`:
 *   **Versioning:** Get plugin version and API version.
 *   **GUI System:** (Conditional) Offers functionality to open custom GUIs and register GUI listeners. Calling these methods will throw an an `IllegalStateException` if the GUI system is not enabled in the core plugin.
 *   **Security System:** (Conditional) Provides methods to retrieve the current security status. Calling these methods will throw an `IllegalStateException` if the Security system is not enabled in the core plugin.
-
-## Example: Safe Event Listener
-
-This example demonstrates how to register a pet listener and handle pet events safely.
-
-```java
-import com.nsr.ai.api.NSRaiAPI;
-import com.nsr.ai.api.PetDataSnapshot;
-import com.nsr.ai.api.PetListener;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
-public class MyAddonPlugin extends JavaPlugin implements Listener {
-
-    @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(this, this);
-        
-        // Register a pet listener
-        try {
-            NSRaiAPI.registerPetListener(new PetListener() {
-                @Override
-                public void onPetEvent(PetDataSnapshot petData) {
-                    getLogger().info("Pet event for owner " 
-                        + petData.getOwner() + ": " + petData.getData());
-                }
-            });
-            getLogger().info("Pet listener registered successfully.");
-        } catch (IllegalStateException e) {
-            getLogger().warning("Could not register pet listener: " + e.getMessage());
-        }
-    }
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        // Example: Get pet data for a joining player
-        try {
-            NSRaiAPI.getPetData(event.getPlayer().getUniqueId())
-                    .ifPresent(petData -> {
-                        getLogger().info(event.getPlayer().getName() 
-                            + "'s pet data: " + petData.getData());
-                    });
-        } catch (IllegalStateException e) {
-            getLogger().warning("Could not get pet data: " + e.getMessage());
-        }
-    }
-}
-```
 
 ## What's Not Included
 
@@ -107,14 +66,14 @@ License Restrictions
 
 ## Releases
 
-Developers should depend on specific version tags (e.g., `1.2.0`) for stability. The `main` branch may contain unreleased changes.
+Developers should depend on specific version tags (e.g., `1.2.2-Beta`) for stability. The `main` branch may contain unreleased changes.
 
 ## Documentation
 
 *   **Developer Guide:** For detailed information on API usage, versioning, and feature detection, please refer to [DEVELOPER.md](DEVELOPER.md).
 *   **Security Policy:** For information on addon compliance, prohibited actions, and security updates, please refer to [SECURITY.md](SECURITY.md).
 
-## full repo tree of BlackForge-31/NSR-AI:
+## Full Repo Tree of BlackForge-31/NSR-AI:
 
 ```directory tree
 NSR-AI/
@@ -123,7 +82,6 @@ NSR-AI/
 ├── LICENSE.txt
 ├── README.md
 ├── SECURITY.md
-├── _config.yml
 ├── pom.xml
 └── src/
     └── main/
@@ -151,7 +109,7 @@ NSR-AI/
 
 If you are developing an addon for NSR-AI, please adhere to the following critical guidelines:
 
-*   **Installation Path:** Addon JAR files must be placed in `/plugins/NSR-AI/addons/` to be loaded correctly. You must instruct your users to do this.
-*   **Command Prefixes:** All addon commands must start with `/ai` followed by the addon's specific subcommand (e.g., `/ai joke`).
+*   **Installation Path:** Addon JAR files can be placed in `/plugins/NSR-AI/addons/` or the main `/plugins/` folder. If placed in the main plugins folder, the addon must have an `addon.yml` and not a `plugin.yml`.
+*   **Command Prefixes:** All addon commands must start with `/aiaddon` or `/aia`.
 
 For detailed rules on command structure, advanced command usage, and the addon lifecycle, please refer to the **[Developer Guide](DEVELOPER.md)**.

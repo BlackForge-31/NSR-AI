@@ -146,124 +146,34 @@ public class MyAIInteraction {
 
 ## 4. Addon Registration
 
-To properly register your addon with the NSR-AI core, you should implement the `AIAddon` interface in a separate class, distinct from your main `JavaPlugin` class. This approach avoids conflicts with `JavaPlugin`'s lifecycle methods and ensures compatibility.
+NSR-AI automatically discovers and registers addons. To create an addon, you need to:
 
-Your main `JavaPlugin` class will be responsible for instantiating and registering your `AIAddon` implementation.
+1.  **Implement the `AIAddon` interface:** Your main addon class must implement the `com.nsr.ai.api.AIAddon` interface.
+2.  **Create an `addon.yml` file:** In your project's resources folder, create a file named `addon.yml`.
 
-### Example: Main Plugin Class (`MyAddonPlugin.java`)
+### `addon.yml` Example
 
-```java
-import com.nsr.ai.api.NSRaiAPI;
-import org.bukkit.plugin.java.JavaPlugin;
+Here is an example of a valid `addon.yml` file:
 
-public class MyAddonPlugin extends JavaPlugin {
-
-    private static final int REQUIRED_API_VERSION = 2; // The API version your addon is built against
-
-    @Override
-    public void onEnable() {
-        if (NSRaiAPI.getApiVersion() < REQUIRED_API_VERSION) {
-            getLogger().severe("NSR-AI API version is too old! "
-                + "Required: " + REQUIRED_API_VERSION
-                + ", Found: " + NSRaiAPI.getApiVersion());
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        // Instantiate your AIAddon implementation and pass this plugin instance
-        AIAddon myAIAddon = new MyAIAddonImpl(this);
-        NSRaiAPI.registerAddon(myAIAddon); // Register the addon implementation
-        getLogger().info("MyAddon registered with NSR-AI core.");
-
-        // ... other onEnable logic for your main plugin
-    }
-
-    @Override
-    public void onDisable() {
-        // ... onDisable logic for your main plugin
-    }
-}
+```yaml
+# The main class of your addon, which implements AIAddon
+main: com.example.myaddon.MyAddon
+# The name of your addon
+name: MyAddon
+# The version of your addon
+version: 1.0
 ```
-
-### Example: AIAddon Implementation Class (`MyAIAddonImpl.java`)
-
-This class implements the `AIAddon` interface.
-
-```java
-import com.nsr.ai.api.AIAddon;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin; // Required for onEnable(JavaPlugin plugin)
-import java.util.Map;
-import java.util.HashMap;
-
-public class MyAIAddonImpl implements AIAddon {
-
-    private JavaPlugin plugin; // Reference to the main plugin instance
-
-    public MyAIAddonImpl(JavaPlugin plugin) {
-        this.plugin = plugin;
-    }
-
-    @Override
-    public void onEnable(JavaPlugin plugin) {
-        // This onEnable is called by the NSR-AI core, not by Bukkit.
-        // Use it for any AIAddon-specific initialization if needed.
-        plugin.getLogger().info("MyAIAddonImpl enabled by NSR-AI core.");
-    }
-
-    @Override
-    public void onDisable() {
-        // This onDisable is called by the NSR-AI core.
-        plugin.getLogger().info("MyAIAddonImpl disabled by NSR-AI core.");
-    }
-
-    @Override
-    public String getName() {
-        // Get the name from the main plugin's description
-        return plugin.getDescription().getName();
-    }
-
-    @Override
-    public String getVersion() {
-        // Get the version from the main plugin's description
-        return plugin.getDescription().getVersion();
-    }
-
-    @Override
-    public String onCommand(Player player, String[] args) {
-        // ... command handling logic for this AIAddon
-        return null;
-    }
-
-    @Override
-    public Map<String, String> getCommands() {
-        Map<String, String> commands = new HashMap<>();
-        commands.put("mycommand", "Description of my command.");
-        return commands;
-    }
-
-    @Override
-    public Map<String, String> getFeatures() {
-        Map<String, String> features = new HashMap<>();
-        features.put("My Feature", "Description of my feature.");
-        return features;
-    }
-}
-``````
 
 ## 5. Addon Installation
 
-For an addon to be recognized and loaded by NSR-AI, its JAR file **must** be placed in the following directory:
+For an addon to be recognized and loaded by NSR-AI, its JAR file can be placed in two locations:
 
-```
-/plugins/NSR-AI/addons/
-```
+1.  **Dedicated Addons Folder:** `/plugins/NSR-AI/addons/`
+2.  **Main Plugins Folder:** `/plugins/`
 
-Addons placed in the main `/plugins/` directory or any other location will not be loaded by the addon manager. This ensures a clean separation between standard plugins and NSR-AI addons.
+If an addon is placed in the main `/plugins/` folder, it **must** contain an `addon.yml` file and **must not** contain a `plugin.yml` file. This prevents conflicts with regular Bukkit/Spigot plugins.
 
-Standard Bukkit/Spigot plugins that do not interact with the NSR-AI API can be placed in the main `/plugins/` folder as usual.
-
-As a developer, you **must** instruct your users to place your addon's JAR file in this specific directory. For an example of how to communicate this, see the installation instructions for plugins like [Advance-Player-Stats](https://modrinth.com/plugin/advance-player-stats).
+As a developer, you **must** instruct your users on the correct installation method.
 
 ## 6. Addon Command Guidelines
 

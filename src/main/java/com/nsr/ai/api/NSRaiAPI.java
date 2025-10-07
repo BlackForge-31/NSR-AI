@@ -228,15 +228,6 @@ public final class NSRaiAPI {
     }
 
     // --- Addon Management ---
-    /**
-     * Registers an addon with the NSR-AI core plugin.
-     * This allows the core plugin to manage the addon, especially for security purposes.
-     * @param addon The addon instance to register.
-     * @throws IllegalStateException if the NSR-AI core plugin is not initialized.
-     */
-    public static void registerAddon(AIAddon addon) {
-        callInternalMethod("registerAddon", new Class<?>[]{AIAddon.class}, addon);
-    }
 
     /**
      * Gets the logger instance for the NSR-AI plugin.
