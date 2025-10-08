@@ -9,25 +9,19 @@ import java.util.Map;
  */
 public interface AIAddon {
 
-    /**
-     * Called when a command is executed that is not handled by the main plugin.
-     * @param player The player who executed the command.
-     * @param args The arguments of the command.
-     * @return A message to be sent to the player, or null if the command is not handled by this addon.
-     */
+    void onEnable(com.nsr.ai.plugin.NSRAIPlugin plugin);
+
+    void onDisable();
+
+    String getName();
+
+    String getVersion();
+
+    String getAuthor();
+
     String onCommand(Player player, String[] args);
 
-    /**
-     * Gets a map of commands provided by the addon.
-     * The key is the command name, and the value is a description of the command.
-     * @return A map of commands.
-     */
     Map<String, String> getCommands();
 
-    /**
-     * Gets a map of features provided by the addon.
-     * The key is the feature name, and the value is a description of the feature.
-     * @return A map of features.
-     */
     Map<String, String> getFeatures();
 }

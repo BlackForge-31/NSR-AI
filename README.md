@@ -22,6 +22,7 @@ Add the following to your `pom.xml`:
 
 ## Features Available in API Version 2
 
+*   **AIAddon Interface Enhancements:** Addons now implement `getName()`, `getVersion()`, `getAuthor()`, `onEnable(NSRAIPlugin plugin)`, and `onDisable()` for better lifecycle management and information retrieval.
 *   **Chat System:** Send messages to AI, get AI responses (asynchronous).
 *   **Pet System:** Get pet data, register pet listeners.
 *   **NPC System:** Register NPC listeners, update NPC skins.
@@ -30,52 +31,63 @@ Add the following to your `pom.xml`:
 *   **GUI System:** (Conditional) Offers functionality to open custom GUIs and register GUI listeners. Calling these methods will throw an an `IllegalStateException` if the GUI system is not enabled in the core plugin.
 *   **Security System:** (Conditional) Provides methods to retrieve the current security status. Calling these methods will throw an `IllegalStateException` if the Security system is not enabled in the core plugin.
 
-## Example: Safe Event Listener
+## Example: Addon Structure and Lifecycle
 
-This example demonstrates how to register a pet listener and handle pet events safely.
+This example demonstrates the basic structure of an NSR-AI addon, including the implementation of the `AIAddon` interface and its lifecycle methods.
 
 ```java
-import com.nsr.ai.api.NSRaiAPI;
-import com.nsr.ai.api.PetDataSnapshot;
-import com.nsr.ai.api.PetListener;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import com.nsr.ai.api.AIAddon;
+import com.nsr.ai.plugin.NSRAIPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class MyAddonPlugin extends JavaPlugin implements Listener {
+import java.util.Map;
+import java.util.HashMap;
+import org.bukkit.entity.Player;
+
+public class MyAddon extends JavaPlugin implements AIAddon {
+
+    private NSRAIPlugin nsrAiPlugin;
 
     @Override
-    public void onEnable() {
-        getServer().getPluginManager().registerEvents(this, this);
-        
-        // Register a pet listener
-        try {
-            NSRaiAPI.registerPetListener(new PetListener() {
-                @Override
-                public void onPetEvent(PetDataSnapshot petData) {
-                    getLogger().info("Pet event for owner " 
-                        + petData.getOwner() + ": " + petData.getData());
-                }
-            });
-            getLogger().info("Pet listener registered successfully.");
-        } catch (IllegalStateException e) {
-            getLogger().warning("Could not register pet listener: " + e.getMessage());
-        }
+    public void onEnable(NSRAIPlugin plugin) {
+        this.nsrAiPlugin = plugin;
+        getLogger().info("MyAddon enabled!");
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        // Example: Get pet data for a joining player
-        try {
-            NSRaiAPI.getPetData(event.getPlayer().getUniqueId())
-                    .ifPresent(petData -> {
-                        getLogger().info(event.getPlayer().getName() 
-                            + "'s pet data: " + petData.getData());
-                    });
-        } catch (IllegalStateException e) {
-            getLogger().warning("Could not get pet data: " + e.getMessage());
-        }
+    @Override
+    public void onDisable() {
+        getLogger().info("MyAddon disabled!");
+    }
+
+    @Override
+    public String getName() {
+        return getDescription().getName();
+    }
+
+    @Override
+    public String getVersion() {
+        return getDescription().getVersion();
+    }
+
+    @Override
+    public String getAuthor() {
+        return getDescription().getAuthors().get(0);
+    }
+
+    @Override
+    public String onCommand(Player player, String[] args) {
+        // ... command handling logic
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getCommands() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> getFeatures() {
+        return new HashMap<>();
     }
 }
 ```
@@ -153,5 +165,5 @@ If you are developing an addon for NSR-AI, please adhere to the following critic
 
 *   **Installation Path:** Addon JAR files must be placed in `/plugins/NSR-AI/addons/` to be loaded correctly. You must instruct your users to do this.
 *   **Command Prefixes:** All addon commands must start with `/ai` followed by the addon's specific subcommand (e.g., `/ai joke`).
+*   **Addon Configuration:** Your addon must include an `addon.yml` file in its resources. This file provides metadata for the addon manager (name, version, author, main class).
 
-For detailed rules on command structure, advanced command usage, and the addon lifecycle, please refer to the **[Developer Guide](DEVELOPER.md)**.
